@@ -12,25 +12,24 @@ def _csv_reader_with_strip(reader):
 
 
 class VideoLibrary:
-    """A class used to represent a Video Library."""
 
     def __init__(self):
-        """The VideoLibrary class is initialized."""
-        self._videos = {}
+
+        self.videos = {}
         with open(Path(__file__).parent / "videos.txt") as video_file:
             reader = _csv_reader_with_strip(
                 csv.reader(video_file, delimiter="|"))
-            for video_info in reader:
-                title, url, tags = video_info
-                self._videos[url] = Video(
-                    title,
-                    url,
+            for video_info in reader :
+                name, id, tags = video_info
+                self.videos[id] = Video(
+                    name,
+                    id,
                     [tag.strip() for tag in tags.split(",")] if tags else [],
                 )
 
     def get_all_videos(self):
         """Returns all available video information from the video library."""
-        return list(self._videos.values())
+        return list(self.videos.values())
 
     def get_video(self, video_id):
         """Returns the video object (title, url, tags) from the video library.
@@ -42,4 +41,4 @@ class VideoLibrary:
             The Video object for the requested video_id. None if the video
             does not exist.
         """
-        return self._videos.get(video_id, None)
+        return self.videos.get(video_id, None)
